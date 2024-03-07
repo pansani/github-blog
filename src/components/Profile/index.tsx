@@ -1,5 +1,17 @@
-import { Buildings, GithubLogo, Users } from "@phosphor-icons/react";
-import { ProfileContainer } from "./style";
+import {
+  ArrowSquareUpRight,
+  Buildings,
+  GithubLogo,
+  Users,
+} from "@phosphor-icons/react";
+import {
+  GithubIconWrapper,
+  GithubLinkContainer,
+  IconAndDataContainer,
+  ProfileContainer,
+  SocialData,
+  UserDataContainer,
+} from "./style";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -56,19 +68,37 @@ export function Profile() {
   return (
     <ProfileContainer>
       <img src={profileData.profileImage} alt="Profile" />
-      <div>
-        <h1>{profileData.personName}</h1>
-        <span>{profileData.description}</span>
+      <UserDataContainer>
         <div>
-          <GithubLogo size={22} weight="fill" />
-          <span>{profileData.username}</span>
-          <Buildings size={22} />
-          <span>{profileData.workplace}</span>
-          <Users size={22} />
-          <span>{profileData.followers}</span>
+          <h1>{profileData.personName}</h1>
         </div>
-        <a href="#">Github</a>
-      </div>
+        <div>
+          <p>{profileData.description}</p>
+        </div>
+        <SocialData>
+          <IconAndDataContainer>
+            <GithubIconWrapper>
+              <GithubLogo size={22} weight="fill" />
+            </GithubIconWrapper>
+            <span>{profileData.username}</span>
+          </IconAndDataContainer>
+          <IconAndDataContainer>
+            <Buildings size={22} />
+            <span>{profileData.workplace}</span>
+          </IconAndDataContainer>
+          <IconAndDataContainer>
+            <Users size={22} />
+            <span>{profileData.followers}</span>
+          </IconAndDataContainer>
+        </SocialData>
+      </UserDataContainer>
+      <a href="https://github.com/pansani">
+        {" "}
+        <GithubLinkContainer>
+          Github
+          <ArrowSquareUpRight size={20} />
+        </GithubLinkContainer>
+      </a>
     </ProfileContainer>
   );
 }
