@@ -10,12 +10,16 @@ export const PostContainer = styled.div`
 
   border-radius: 10px;
 
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
   h1 {
     max-width: 15rem;
     font-size: 20px;
     font-weight: 600;
 
-    margin-bottom: 1rem;
+    margin-bottom: 5%;
 
     color: ${(props) => props.theme["base-title"]};
   }
@@ -46,5 +50,9 @@ export const PostContainer = styled.div`
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     max-height: 7rem;
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
   }
 `;

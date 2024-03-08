@@ -21,9 +21,22 @@ export const ProfileContainer = styled.div`
 
   position: relative;
 
+  @media (max-width: 768px) {
+    width: 90%;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    height: 100%;
+  }
+
   img {
     width: 9.25rem;
     height: 9.25rem;
+
+    @media (max-width: 768px) {
+      width: 4rem;
+      height: 4rem;
+    }
   }
 
   span {

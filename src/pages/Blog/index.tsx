@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Post } from "../../components/Post";
 import { Profile } from "../../components/Profile";
-import { PostsContainer } from "./style";
+import { NavLinkStyled, PostsContainer } from "./style";
 import axios from "axios";
 import { SearchForm } from "../../components/SearchForm";
-import { NavLink } from "react-router-dom";
 
 interface PostData {
   id: number;
@@ -99,9 +98,9 @@ export const Blog = () => {
       ></SearchForm>
       <PostsContainer>
         {(searchValue === "" ? postData : filteredPostData).map((post) => (
-          <NavLink key={post.id} to={`/post/${post.id}`}>
+          <NavLinkStyled key={post.id} to={`/post/${post.id}`}>
             <Post content={post.content} date={post.date} title={post.title} />
-          </NavLink>
+          </NavLinkStyled>
         ))}
       </PostsContainer>
     </>

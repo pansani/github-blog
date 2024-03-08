@@ -22,14 +22,38 @@ export const PostHeaderContainer = styled.div`
 
   position: relative;
 
+  @media (max-width: 768px) {
+    width: 90%;
+    height: 10rem;
+    padding: 0;
+
+    align-items: normal;
+  }
+
   h1 {
-    font-size: 1.5rem;
+    font-size: 24px;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+
+      width: 200px;
+
+      margin: 0 auto;
+
+      margin-top: 2rem;
+    }
   }
 
   span {
     margin-left: 0.5rem;
 
     color: ${(props) => props.theme["base-span"]};
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+      display: inline;
+      margin-left: 0;
+    }
   }
 
   a {
@@ -50,6 +74,10 @@ export const BackToHomeContainer = styled.div`
   position: absolute;
   top: 15%;
   left: 5%;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 export const CareLeftIcon = styled(CaretLeft)`
@@ -62,6 +90,10 @@ export const GithubIconWrapper = styled.div`
   width: 22px;
   border: 1px solid ${(props) => props.theme["base-label"]};
   border-radius: 50%;
+
+  @media (max-width: 768px) {
+    height: 22px;
+  }
 `;
 
 export const IconAndDataContainer = styled.div`
@@ -75,6 +107,10 @@ export const PostSocialData = styled.div`
   gap: 3rem;
 
   color: ${(props) => props.theme["base-label"]};
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
 `;
 
 export const PostDataContainer = styled.div`
@@ -83,6 +119,10 @@ export const PostDataContainer = styled.div`
   gap: 1rem;
 
   margin-top: 1rem;
+
+  @media (max-width: 768px) {
+    margin-left: 3rem;
+  }
 `;
 
 export const GithubLinkContainer = styled.div`
@@ -95,4 +135,8 @@ export const GithubLinkContainer = styled.div`
   text-decoration: none;
 
   color: ${(props) => props.theme.blue};
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;

@@ -8,6 +8,10 @@ export const FormContainer = styled.form`
   margin-top: 4rem;
   margin-bottom: 1rem;
 
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
   input {
     width: 100%;
     height: 2.5rem;

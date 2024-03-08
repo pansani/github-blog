@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const PostsContainer = styled.div`
@@ -12,4 +13,13 @@ export const PostsContainer = styled.div`
   margin: 0 auto;
 
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const NavLinkStyled = styled(NavLink)`
+  text-decoration: none;
 `;
