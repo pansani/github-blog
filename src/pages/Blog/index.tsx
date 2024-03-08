@@ -4,6 +4,7 @@ import { Profile } from "../../components/Profile";
 import { PostsContainer } from "./style";
 import axios from "axios";
 import { SearchForm } from "../../components/SearchForm";
+import { NavLink } from "react-router-dom";
 
 interface PostData {
   id: number;
@@ -57,29 +58,37 @@ export const Blog = () => {
     const newValue = event.target.value;
     setSearchValue(newValue);
     searchPosts(newValue);
-    console.log("searchValue", searchValue);
-    console.log("filteredPostData", filteredPostData);
   };
 
   useEffect(() => {
-    axios
-      .get("https://api.github.com/repos/pansani/github-blog/issues", {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      })
-      .then((response) => {
+    const fetchIssues = async () => {
+      const repo = "pansani/github-blog";
+      const url = `https://api.github.com/repos/${repo}/issues`;
+
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        });
+
         if (response.data) {
-          const data = response.data.map((issue: GitHubIssue) => ({
+          const issues = response.data.map((issue: GitHubIssue) => ({
             title: issue.title,
             date: new Date(issue.created_at),
             content: issue.body,
             id: issue.id,
           }));
-          setPostData(data);
+          console.log("issues", issues);
+          setPostData(issues);
         }
-      });
-  }, []);
+      } catch (error) {
+        console.error("Error fetching GitHub issues:", error);
+      }
+    };
+
+    fetchIssues();
+  }, [token]);
 
   return (
     <>
@@ -89,23 +98,11 @@ export const Blog = () => {
         handleChangeSearchValue={handleChangeSearchValue}
       ></SearchForm>
       <PostsContainer>
-        {searchValue === ""
-          ? postData.map((post) => (
-              <Post
-                key={post.id}
-                content={post.content}
-                date={post.date}
-                title={post.title}
-              ></Post>
-            ))
-          : filteredPostData.map((post) => (
-              <Post
-                key={post.id}
-                content={post.content}
-                date={post.date}
-                title={post.title}
-              ></Post>
-            ))}
+        {(searchValue === "" ? postData : filteredPostData).map((post) => (
+          <NavLink key={post.id} to={`/post/${post.id}`}>
+            <Post content={post.content} date={post.date} title={post.title} />
+          </NavLink>
+        ))}
       </PostsContainer>
     </>
   );
