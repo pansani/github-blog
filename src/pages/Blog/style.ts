@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const PostsContainer = styled.div`
   padding-top: 2rem;
 
-  width: 61%;
+  width: 54rem;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
