@@ -59,7 +59,7 @@ export function Profile() {
         }
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [token]);
 
   if (!profileData) {
     return <div>Loading...</div>;

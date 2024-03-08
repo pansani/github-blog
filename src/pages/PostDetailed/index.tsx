@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PostHeader } from "../../components/PostHeader";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
+import { IssueContentContainer } from "./style";
 
-interface PostData {
+interface IssueData {
   id: number;
   title: string;
   date: Date;
@@ -12,18 +14,31 @@ interface PostData {
   comments: number;
 }
 
+interface GitHubUser {
+  login: string;
+}
+
 interface GitHubIssue {
   title: string;
-  created_at: string;
+  created_at: Date;
   body: string;
   id: number;
-  owner: string;
+  user: GitHubUser;
   comments: number;
 }
 
+const transformIssueData = (data: GitHubIssue): IssueData => ({
+  id: data.id,
+  comments: data.comments,
+  username: data.user.login,
+  content: data.body,
+  date: new Date(data.created_at),
+  title: data.title,
+});
+
 export function PostDetailed() {
   const { issueId } = useParams();
-  const [issue, setIssue] = useState<PostData | null>(null);
+  const [issue, setIssue] = useState<IssueData | null>(null);
 
   useEffect(() => {
     const fetchIssue = async () => {
@@ -38,20 +53,20 @@ export function PostDetailed() {
           },
         });
 
-        if (response.data) {
-          const issueData = response.data.map((issue: GitHubIssue) => ({
-            title: issue.title,
-            date: new Date(issue.created_at),
-            content: issue.body,
-            id: issue.id,
-            username: issue.owner,
-            comments: issue.comments,
-          }));
-          setIssue(issueData);
-          console.log(issueData);
+        if (response.data && Array.isArray(response.data)) {
+          const issueData = response.data.find(
+            (issue) => issue.id.toString() === issueId
+          );
+
+          if (issueData) {
+            setIssue(transformIssueData(issueData));
+            console.log(issueData);
+          } else {
+            console.log(`Issue with ID ${issueId} not found.`);
+          }
         }
       } catch (error) {
-        console.error("Error fetching GitHub issue:", error);
+        console.error("Error fetching GitHub issues:", error);
       }
     };
 
@@ -59,6 +74,7 @@ export function PostDetailed() {
       fetchIssue();
     }
   }, [issueId]);
+  console.log("issues", issue);
 
   return (
     <>
@@ -67,12 +83,12 @@ export function PostDetailed() {
           <PostHeader
             postTitle={issue.title}
             postUsername={issue.username}
-            postDate={issue.date}
+            postDate={format(new Date(issue.date), "dd/MM/yyyy")}
             postComments={issue.comments}
           />
-          <div>
-            <h1>{issue.title}</h1>
-          </div>
+          <IssueContentContainer>
+            <p>{issue.content}</p>
+          </IssueContentContainer>
         </>
       )}
     </>

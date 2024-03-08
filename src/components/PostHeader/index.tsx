@@ -19,7 +19,7 @@ import { NavLink } from "react-router-dom";
 interface PostHeaderProps {
   postTitle: string | undefined;
   postUsername: string | undefined;
-  postDate: Date | undefined;
+  postDate: string | undefined;
   postComments: number | undefined;
 }
 
